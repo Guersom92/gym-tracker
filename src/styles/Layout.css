@@ -1,0 +1,112 @@
+.layout__nav {
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.layout__nav-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+}
+
+.layout__nav-link {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.layout__nav-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+/* Tema Mariceze */
+.mariceze .layout__nav {
+  background: linear-gradient(135deg, #fff5f8 0%, #fff0f5 100%);
+  border-bottom: 1px solid #ffd1dc;
+}
+
+.mariceze .layout__nav-link {
+  color: #ff1493;
+}
+
+.mariceze .layout__nav-link:hover {
+  background-color: #ffe4f0;
+  color: #cc1f64;
+}
+
+.mariceze .layout__nav-button {
+  background-color: #ff69b4;
+  color: white;
+}
+
+.mariceze .layout__nav-button:hover {
+  background-color: #ff1493;
+  transform: translateY(-2px);
+}
+
+.mariceze .layout__nav-button:active {
+  transform: translateY(0);
+}
+
+/* Tema Morgues */
+.morgues .layout__nav {
+  background: linear-gradient(135deg, #eff6ff 0%, #e3f2fd 100%);
+  border-bottom: 1px solid #90caf9;
+}
+
+.morgues .layout__nav-link {
+  color: #1565c0;
+}
+
+.morgues .layout__nav-link:hover {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+.morgues .layout__nav-button {
+  background-color: #1976d2;
+  color: white;
+}
+
+.morgues .layout__nav-button:hover {
+  background-color: #1565c0;
+  transform: translateY(-2px);
+}
+
+.morgues .layout__nav-button:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .layout__nav {
+    padding: 0.75rem;
+  }
+
+  .layout__nav-link {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .layout__nav-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+}
