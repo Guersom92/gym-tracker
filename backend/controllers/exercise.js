@@ -91,10 +91,11 @@ exerciseRouter.put('/:id', async (request, response) => {
             return response.status(403).json({ error: 'not authorized' })
         }
 
-        const { sets, repetitions, day } = request.body
+        const { sets, repetitions, day, weight } = request.body
         exercise.sets = sets
         exercise.repetitions = repetitions
         exercise.day = day
+        exercise.weight = weight
 
         const updatedExercise = await exercise.save()
         response.json(updatedExercise)

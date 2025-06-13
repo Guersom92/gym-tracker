@@ -12,6 +12,7 @@ const ExerciseForm = ({
     name: "",
     sets: "",
     repetitions: "",
+    weight: "",
     day: date.toISOString(),
   });
   const [error, setError] = useState(null);
@@ -52,6 +53,7 @@ const ExerciseForm = ({
       name: "",
       sets: "",
       repetitions: "",
+      weight: "",
       day: date.toISOString(),
     });
     setEditingExercise(null);
@@ -63,100 +65,132 @@ const ExerciseForm = ({
       name: exercise.name,
       sets: exercise.sets,
       repetitions: exercise.repetitions,
+      weight: exercise.weight,
       day: exercise.day,
     });
   };
 
   return (
-    <div className="exercise-form">
-      <h3>{editingExercise ? "Editar ejercicio" : "Añadir ejercicio"}</h3>
+    <div className="modal-overlay" onClick={onClose}>
+      <div
+        className="exercise-form"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <h3>{editingExercise ? "Editar ejercicio" : "Añadir ejercicio"}</h3>
 
-      {/* Lista de ejercicios existentes */}
-      {exercises && exercises.length > 0 && (
-        <div className="day-exercises">
-          <h4>Ejercicios del día {date.toLocaleDateString()}</h4>
-          {exercises.map((exercise) => (
-            <div key={exercise.id} className="exercise-item">
-              <div className="exercise-info">
-                <strong>{exercise.name}</strong>
-                <span>{exercise.sets} series</span>
-                <span>{exercise.repetitions} repeticiones</span>
+        {/* Lista de ejercicios existentes */}
+        {exercises && exercises.length > 0 && (
+          <div className="day-exercises">
+            <h4>Ejercicios del día {date.toLocaleDateString()}</h4>
+            {exercises.map((exercise) => (
+              <div key={exercise.id} className="exercise-item">
+                <div className="exercise-info">
+                  <strong>{exercise.name}</strong>
+                  <span>{exercise.sets} series</span>
+                  <span>{exercise.repetitions} repeticiones</span>
+                </div>
+                <div className="exercise-actions">
+                  <button
+                    type="button"
+                    onClick={() => startEdit(exercise)}
+                    className="edit-button"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(exercise.id)}
+                    className="delete-button"
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
-              <div className="exercise-actions">
-                <button
-                  type="button"
-                  onClick={() => startEdit(exercise)}
-                  className="edit-button"
-                >
-                  Editar
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(exercise.id)}
-                  className="delete-button"
-                >
-                  Eliminar
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
 
-      {/* Formulario */}
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Nombre del ejercicio:</label>
-          <input
-            id="name"
-            type="text"
-            value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="sets">Series:</label>
-          <input
-            id="sets"
-            type="number"
-            value={formData.sets}
-            onChange={(e) =>
-              setFormData({ ...formData, sets: parseInt(e.target.value) || "" })
-            }
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="repetitions">Repeticiones:</label>
-          <input
-            id="repetitions"
-            type="number"
-            value={formData.repetitions}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                repetitions: parseInt(e.target.value) || "",
-              })
-            }
-            required
-          />
-        </div>
-        {error && <div className="error-message">{error}</div>}
-        <div className="form-buttons">
-          <button type="submit">
-            {editingExercise ? "Actualizar" : "Guardar"}
-          </button>
-          {editingExercise && (
-            <button type="button" onClick={resetForm} className="cancel-button">
-              Cancelar edición
+        {/* Formulario */}
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Nombre del ejercicio:</label>
+            <input
+              id="name"
+              type="text"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="sets">Series:</label>
+            <input
+              id="sets"
+              type="number"
+              value={formData.sets}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  sets: parseInt(e.target.value) || "",
+                })
+              }
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="repetitions">Repeticiones:</label>
+            <input
+              id="repetitions"
+              type="number"
+              value={formData.repetitions}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  repetitions: parseInt(e.target.value) || "",
+                })
+              }
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="weight">Peso:</label>
+            <input
+              id="weight"
+              type="number"
+              value={formData.weight}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  weight: parseFloat(e.target.value),
+                })
+              }
+              required
+            />
+          </div>
+          {error && <div className="error-message">{error}</div>}
+          <div className="form-buttons">
+            <button type="submit">
+              {editingExercise ? "Actualizar" : "Guardar"}
             </button>
-          )}
-          <button type="button" onClick={onClose}>
-            Cerrar
-          </button>
-        </div>
-      </form>
+            {editingExercise && (
+              <button
+                type="button"
+                onClick={resetForm}
+                className="cancel-button"
+              >
+                Cancelar edición
+              </button>
+            )}
+            <button type="button" onClick={onClose}>
+              Cerrar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

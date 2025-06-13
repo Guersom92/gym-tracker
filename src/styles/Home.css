@@ -65,6 +65,7 @@
   display: grid !important;
   grid-template-columns: repeat(7, 1fr);
   width: 100%;
+  gap: 0.4rem;
 }
 
 .react-calendar__tile {
@@ -104,6 +105,18 @@
 }
 
 /* Formulario */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 .exercise-form {
   position: fixed;
   top: 50%;
@@ -167,7 +180,6 @@
   align-items: center;
   gap: 1rem;
 }
-
 .exercise-info {
   display: flex;
   flex-direction: column;
@@ -345,6 +357,12 @@ button:active {
   .home h1 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
+  }
+  .exercise-form {
+    font-size: 0.9rem;
+  }
+  .form-buttons {
+    flex-wrap: wrap;
   }
 
   .react-calendar {

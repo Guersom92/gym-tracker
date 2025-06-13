@@ -7,25 +7,9 @@ import service from "../services/gym";
 import Login from "./Login";
 
 const Home = () => {
-  const { user } = useUser();
+  const { user, exercises, setExercises } = useUser();
   const [date, setDate] = useState(new Date());
   const [showForm, setShowForm] = useState(false);
-  const [exercises, setExercises] = useState([]);
-
-  useEffect(() => {
-    if (user) {
-      loadExercises();
-    }
-  }, [user]);
-
-  const loadExercises = async () => {
-    try {
-      const exercisesData = await service.getExercises();
-      setExercises(exercisesData);
-    } catch (error) {
-      console.error("Error al cargar ejercicios:", error);
-    }
-  };
 
   const handleDateClick = (value) => {
     setDate(value);

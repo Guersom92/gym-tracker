@@ -5,6 +5,8 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [exercises, setExercises] = useState([]);
+
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("loggedUser");
     if (loggedUser) {
@@ -14,11 +16,22 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    service
+      .getExercises()
+      .then((data) => setExercises(data))
+      .catch((error) => {
+        console.error("Error al cargar ejercicios:", error);
+      });
+  }, [user]);
+
   const clear = () => {
     setUser(null);
   };
   return (
-    <UserContext.Provider value={{ user, setUser, clear }}>
+    <UserContext.Provider
+      value={{ user, setUser, setExercises, clear, exercises }}
+    >
       {children}
     </UserContext.Provider>
   );
