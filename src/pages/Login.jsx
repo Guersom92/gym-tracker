@@ -8,7 +8,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setUser } = useUser();
+  const { setUser, setIsLoading } = useUser();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -16,6 +16,7 @@ function Login() {
     setError("");
 
     try {
+      setIsLoading(true);
       const response = await service.login({ username, password });
       const data = await response.json();
 
@@ -30,6 +31,7 @@ function Login() {
     } catch (error) {
       console.error("Error durante el login:", error.message);
       setError(error.message);
+      setIsLoading(false);
     }
   };
 

@@ -1,5 +1,3 @@
-import React, { useContext } from "react";
-import { UserContext } from "../context/User";
 import {
   Link,
   Navigate,
@@ -8,16 +6,18 @@ import {
   useNavigate,
 } from "react-router-dom";
 import "../styles/Layout.css";
+import { useUser } from "../hooks/useUser";
 
 function Layout() {
-  const { user, clear } = useContext(UserContext);
+  const { user, clear } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (user === null) return <Navigate to="/login" />;
+  if (user === null && !window.localStorage.getItem("loggedUser"))
+    return <Navigate to="/login" />;
 
   return (
-    <div className={user.username}>
+    <div className={user?.username}>
       <nav className="layout__nav">
         <ul className="layout__nav-list">
           <li>

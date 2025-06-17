@@ -1,11 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import service from "../services/gym";
+import Spinner from "../components/Spinner";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [exercises, setExercises] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem("loggedUser");
@@ -23,7 +25,8 @@ export const UserProvider = ({ children }) => {
         .then((data) => setExercises(data))
         .catch((error) => {
           console.error("Error al cargar ejercicios:", error);
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
   }, [user]);
 
@@ -32,9 +35,9 @@ export const UserProvider = ({ children }) => {
   };
   return (
     <UserContext.Provider
-      value={{ user, setUser, setExercises, clear, exercises }}
+      value={{ user, setUser, setExercises, clear, exercises, setIsLoading }}
     >
-      {children}
+      {isLoading && <Spinner />} {children}
     </UserContext.Provider>
   );
 };
