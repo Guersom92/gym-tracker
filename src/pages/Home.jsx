@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import "../styles/Home.css";
 import { useUser } from "../hooks/useUser";
 import ExerciseForm from "../components/ExerciseForm";
-import service from "../services/gym";
-import Login from "./Login";
 
 const Home = () => {
   const { user, exercises, setExercises } = useUser();
@@ -66,8 +64,6 @@ const Home = () => {
       return hasExercise ? <div className="exercise-dot">•</div> : null;
     }
   };
-
-  if (!user) return <Login />;
 
   return (
     <div className="home">

@@ -1,6 +1,12 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/User";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "../styles/Layout.css";
 
 function Layout() {
@@ -8,7 +14,7 @@ function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  if (user === null) return <Outlet />;
+  if (user === null) return <Navigate to="/login" />;
 
   return (
     <div className={user.username}>

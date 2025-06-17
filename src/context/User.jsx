@@ -17,12 +17,14 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    service
-      .getExercises()
-      .then((data) => setExercises(data))
-      .catch((error) => {
-        console.error("Error al cargar ejercicios:", error);
-      });
+    if (user) {
+      service
+        .getExercises()
+        .then((data) => setExercises(data))
+        .catch((error) => {
+          console.error("Error al cargar ejercicios:", error);
+        });
+    }
   }, [user]);
 
   const clear = () => {
