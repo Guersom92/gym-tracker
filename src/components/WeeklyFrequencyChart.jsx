@@ -75,7 +75,8 @@ const WeeklyFrequencyChart = ({ exercises }) => {
     },
     scales: {
       y: {
-        beginAtZero: true,
+        min: 0,
+        max: 5,
         ticks: {
           stepSize: 1,
         },
