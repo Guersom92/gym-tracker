@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -21,14 +21,31 @@ ChartJS.register(
   Legend
 );
 
-const WeeklyFrequencyChart = ({ exercises }) => {
+const WeeklyFrequencyChart = ({ exercises, user }) => {
   const [weeklyData, setWeeklyData] = useState({
     labels: [],
     datasets: [],
   });
 
+  // Definir colores por usuario
+  const userColors = {
+    mariceze: {
+      borderColor: "#ff1493", // rosa fuerte
+      backgroundColor: "rgba(255, 20, 147, 0.3)",
+    },
+    morgues: {
+      borderColor: "#1976d2", // azul fuerte
+      backgroundColor: "rgba(25, 118, 210, 0.3)",
+    },
+    default: {
+      borderColor: "rgb(75, 192, 192)",
+      backgroundColor: "rgba(75, 192, 192, 0.5)",
+    },
+  };
+  const colors = userColors[user?.username] || userColors.default;
+
   useEffect(() => {
-    if (!exercises || exercises.length === 0) return;
+    if (!exercises) return;
 
     // Agrupar ejercicios por semana
     const exercisesByWeek = exercises.reduce((acc, exercise) => {
@@ -38,29 +55,44 @@ const WeeklyFrequencyChart = ({ exercises }) => {
       return acc;
     }, {});
 
-    // Convertir Sets a conteos de días únicos
-    const weeklyFrequency = Object.fromEntries(
-      Object.entries(exercisesByWeek).map(([week, daysSet]) => [
-        week,
-        daysSet.size,
-      ])
+    // Calcular la semana actual
+    const today = new Date();
+    const currentWeekNumber = getWeekNumber(today);
+
+    // Generar las últimas 5 semanas (aunque no haya datos)
+    const last5WeekNumbers = Array.from(
+      { length: 5 },
+      (_, i) => currentWeekNumber - 4 + i
     );
 
-    // Preparar datos para la gráfica
+    // Construir etiquetas y datos, poniendo 0 si no hay ejercicios esa semana
+    const labels = last5WeekNumbers.map((num) => `Semana ${num}`);
+    const data = last5WeekNumbers.map((num) => {
+      const key = `Semana ${num}`;
+      return exercisesByWeek[key] ? exercisesByWeek[key].size : 0;
+    });
+
     setWeeklyData({
-      labels: Object.keys(weeklyFrequency),
+      labels,
       datasets: [
         {
           label: "Días de entrenamiento por semana",
-          data: Object.values(weeklyFrequency),
+          data,
           fill: false,
-          borderColor: "rgb(75, 192, 192)",
-          backgroundColor: "rgba(75, 192, 192, 0.5)",
+          borderColor: colors.borderColor,
+          backgroundColor: colors.backgroundColor,
           tension: 0.1,
         },
       ],
     });
-  }, [exercises]);
+  }, [exercises, user]);
+
+  // Helper para obtener el número de semana
+  const getWeekNumber = (date) => {
+    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  };
 
   const options = {
     responsive: true,

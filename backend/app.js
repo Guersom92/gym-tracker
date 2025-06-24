@@ -24,6 +24,11 @@ app.use('/api/login', loginRouter)
 app.use('/api/exercise', exerciseRouter)
 app.use('/api/users', usersRouter)
 
+// CATCH-ALL: para rutas de React Router en producción
+app.get('/{*any}', (req, res) => {
+    res.sendFile('../dist/index.html');
+});
+
 // Error handling
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

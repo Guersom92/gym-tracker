@@ -4,8 +4,7 @@ import "../styles/Statistics.css";
 import { useUser } from "../hooks/useUser";
 
 function Statistics() {
-  const { user, exercises } = useUser();
-  const username = user ? user.name : "";
+  const { exercises, user } = useUser();
 
   return (
     <div className="statistics-container">
@@ -17,7 +16,7 @@ function Statistics() {
               Frecuencia de entrenamiento por semana
             </p>
           </div>
-          <WeeklyFrequencyChart exercises={exercises} />
+          <WeeklyFrequencyChart exercises={exercises} user={user} />
         </div>
 
         <div className="stats-card future-feature">
