@@ -46,7 +46,7 @@ function Login() {
             id="username"
             type="text"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsername(e.target.value.trim())}
             required
           />
         </div>
@@ -56,7 +56,7 @@ function Login() {
             id="password"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trim())}
             required
           />
         </div>

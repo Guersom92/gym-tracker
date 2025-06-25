@@ -17,10 +17,12 @@ const ExerciseForm = ({
   });
   const [error, setError] = useState(null);
   const [editingExercise, setEditingExercise] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
+    setIsSubmitting(true);
     try {
       let response;
       if (editingExercise) {
@@ -35,6 +37,8 @@ const ExerciseForm = ({
     } catch (error) {
       console.error("Error al guardar ejercicio:", error);
       setError(error.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -173,7 +177,7 @@ const ExerciseForm = ({
           </div>
           {error && <div className="error-message">{error}</div>}
           <div className="form-buttons">
-            <button type="submit">
+            <button type="submit" disabled={isSubmitting}>
               {editingExercise ? "Actualizar" : "Guardar"}
             </button>
             {editingExercise && (
@@ -181,11 +185,12 @@ const ExerciseForm = ({
                 type="button"
                 onClick={resetForm}
                 className="cancel-button"
+                disabled={isSubmitting}
               >
                 Cancelar edición
               </button>
             )}
-            <button type="button" onClick={onClose}>
+            <button type="button" onClick={onClose} disabled={isSubmitting}>
               Cerrar
             </button>
           </div>
