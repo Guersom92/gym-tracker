@@ -125,7 +125,7 @@ const ExerciseForm = ({
               type="text"
               value={formData.name}
               onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
+                setFormData({ ...formData, name: e.target.value.trim() })
               }
               required
             />

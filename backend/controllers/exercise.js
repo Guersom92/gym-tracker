@@ -91,7 +91,8 @@ exerciseRouter.put('/:id', async (request, response) => {
             return response.status(403).json({ error: 'not authorized' })
         }
 
-        const { sets, repetitions, day, weight } = request.body
+        const { sets, repetitions, day, weight, name } = request.body
+        exercise.name = name
         exercise.sets = sets
         exercise.repetitions = repetitions
         exercise.day = day
