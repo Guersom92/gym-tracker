@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import WeeklyFrequencyChart from "../components/WeeklyFrequencyChart";
 import "../styles/Statistics.css";
 import { useUser } from "../hooks/useUser";

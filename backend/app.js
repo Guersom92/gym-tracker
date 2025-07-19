@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const cors = require('cors')
 const app = express()
 const exerciseRouter = require('./controllers/exercise')
 const mongoose = require('mongoose')
@@ -14,7 +13,6 @@ mongoose.set('strictQuery', false)
 mongoose.connect(process.env.MONGODB_URI)
 
 // Middlewares
-app.use(cors())
 app.use(express.json())
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
