@@ -5,7 +5,7 @@ import { useUser } from "../hooks/useUser";
 import ExerciseForm from "../components/ExerciseForm";
 
 const Home = () => {
-  const { user, exercises, setExercises } = useUser();
+  const { exercises, setExercises } = useUser();
   const [date, setDate] = useState(new Date());
   const [showForm, setShowForm] = useState(false);
 

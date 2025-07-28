@@ -47,6 +47,10 @@ const getExercises = async () => {
         }
     });
 
+    if (response.status===401) {
+        throw new Error("token invalido")
+    }
+   
     if (!response.ok) {
         throw new Error('Error al obtener ejercicios');
     }
@@ -65,6 +69,9 @@ const updateExercise = async (id, exerciseData) => {
             body: JSON.stringify(exerciseData),
         });
 
+        if (response.status===401) {
+            throw new Error("token invalido")
+        }
         if (!response.ok) {
             const error = await response.json();
             throw new Error(error.error || 'Error al actualizar ejercicio');
@@ -86,6 +93,9 @@ const deleteExercise = async (id) => {
             }
         });
 
+        if (response.status===401) {
+            throw new Error("token invalido")
+        }
         if (!response.ok) {
             const error = await response.json();
             throw new Error(error.error || 'Error al eliminar ejercicio');

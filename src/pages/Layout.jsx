@@ -36,7 +36,6 @@ function Layout() {
               className="layout__nav-button"
               onClick={() => {
                 clear();
-                window.localStorage.clear();
                 navigate("/login");
               }}
             >

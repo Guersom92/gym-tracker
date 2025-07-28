@@ -87,11 +87,13 @@ const WeeklyFrequencyChart = ({ exercises, user }) => {
     });
   }, [exercises, user]);
 
-  // Helper para obtener el número de semana
-  const getWeekNumber = (date) => {
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  // Helper para obtener el número de semana (ISO 8601)
+  const getWeekNumber = (d) => {
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+    return weekNo;
   };
 
   const options = {
@@ -118,11 +120,7 @@ const WeeklyFrequencyChart = ({ exercises, user }) => {
 
   // Función helper para obtener la clave de la semana
   const getWeekKey = (date) => {
-    const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-    const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
-    const weekNumber = Math.ceil(
-      (pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7
-    );
+    const weekNumber = getWeekNumber(date);
     return `Semana ${weekNumber}`;
   };
 

@@ -24,6 +24,9 @@ export const UserProvider = ({ children }) => {
         .getExercises()
         .then((data) => setExercises(data))
         .catch((error) => {
+          if (error.message === "token invalido") {
+            clear();
+          }
           console.error("Error al cargar ejercicios:", error);
         })
         .finally(() => setIsLoading(false));
@@ -32,6 +35,7 @@ export const UserProvider = ({ children }) => {
 
   const clear = () => {
     setUser(null);
+    window.localStorage.clear();
   };
   return (
     <UserContext.Provider
